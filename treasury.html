@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>APT Treasury</title>
+  <title>APT Treasury Upgrade</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     /* Reset */
@@ -17,6 +17,7 @@
       font-family: "Courier New", Courier, monospace;
       background: #0d1117;
       color: #c9d1d9;
+      line-height: 1.6;
     }
 
     /* Navbar */
@@ -25,7 +26,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 1rem 2rem;
-      background: #0d1117;
+      background: #161b22;
       border-bottom: 1px solid #21262d;
     }
 
@@ -34,185 +35,226 @@
       font-weight: bold;
       display: flex;
       align-items: center;
+      color: #58a6ff;
     }
 
-    .navbar .logo span {
-      margin-left: 0.5rem;
-      color: #58a6ff;
+    .navbar nav {
+      display: flex;
+      gap: 1.5rem;
     }
 
     .navbar nav ul {
       display: flex;
       list-style: none;
-    }
-
-    .navbar nav ul li {
-      margin-left: 1.5rem;
+      gap: 1.5rem;
     }
 
     .navbar nav ul li a {
+      text-decoration: none;
       color: #c9d1d9;
       font-weight: 500;
+      transition: color 0.3s;
     }
 
     .navbar nav ul li a:hover {
       color: #58a6ff;
     }
 
-    /* Treasury Section */
+    .navbar .burger {
+      display: none;
+      font-size: 1.5rem;
+      color: #c9d1d9;
+      cursor: pointer;
+    }
+
+    .navbar .burger:focus {
+      outline: none;
+    }
+
+    .navbar nav.active {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 60px;
+      right: 10px;
+      background: #161b22;
+      border: 1px solid #21262d;
+      border-radius: 8px;
+      padding: 10px;
+      z-index: 1000;
+    }
+
+    .navbar nav.active ul {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* Treasury Header */
     .treasury-header {
-      padding: 2rem;
       text-align: center;
+      padding: 2rem 1rem;
       background: #161b22;
       border-bottom: 1px solid #21262d;
     }
 
     .treasury-header h1 {
       font-size: 2rem;
-      font-weight: 700;
       color: #58a6ff;
+      margin-bottom: 1rem;
     }
 
     .treasury-header .total-amount {
-      font-size: 2rem;
+      font-size: 3rem;
       font-weight: bold;
       color: #c9d1d9;
+      animation: fadeIn 1s ease-in-out;
     }
 
+    /* Treasury Details */
     .treasury-details {
-      padding: 2rem;
+      padding: 2rem 1rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-    }
-
-    .charts {
-      display: flex;
-      justify-content: space-around;
-      width: 100%;
-      margin-top: 2rem;
-      flex-wrap: wrap;
+      gap: 2rem;
     }
 
     .chart-container {
-      width: 40%;
+      width: 100%;
       max-width: 400px;
-      margin: 1rem 0;
-    }
-
-    .chart-container .chart-legend {
-      text-align: center;
-      margin-top: 10px;
-      color: #c9d1d9;
     }
 
     .asset-table {
       width: 100%;
-      max-width: 1200px;
+      max-width: 800px;
       border-collapse: collapse;
       margin-top: 1rem;
+      background: #161b22;
+      border: 1px solid #21262d;
+      border-radius: 8px;
+      overflow: hidden;
     }
 
     .asset-table th,
     .asset-table td {
       padding: 0.75rem 1rem;
       text-align: left;
-      border-bottom: 1px solid #21262d;
     }
 
     .asset-table th {
-      background: #161b22;
+      background: #21262d;
       color: #58a6ff;
       font-weight: 600;
+    }
+
+    .asset-table tr:nth-child(even) {
+      background: #1a1e25;
     }
 
     .asset-table tr:hover {
       background: #21262d;
     }
 
-    .asset-table .view-btn {
+    .asset-table td {
+      color: #c9d1d9;
+    }
+
+    .view-btn {
       background: #58a6ff;
       color: #0d1117;
       border: none;
       padding: 0.5rem 1rem;
       border-radius: 5px;
       cursor: pointer;
+      transition: background 0.3s;
     }
 
-    .asset-table .view-btn:hover {
+    .view-btn:hover {
       background: #1f6feb;
     }
 
     /* Footer */
-    footer {
-      background: #0d1117;
-      color: #c9d1d9;
+    .footer {
       text-align: center;
-      padding: 1rem 0;
-      margin-top: 2rem;
+      padding: 1rem;
+      background: #161b22;
+      border-top: 1px solid #21262d;
     }
 
-    footer img {
-      width: 15px;
+    .footer a {
+      color: #58a6ff;
+      text-decoration: none;
     }
 
-    /* Responsiveness */
+    /* Animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Design */
     @media (max-width: 768px) {
-      .charts {
-        flex-direction: column;
-        align-items: center;
+      .navbar .burger {
+        display: block;
       }
 
-      .chart-container {
-        width: 90%;
-      }
-
-      .asset-table td, .asset-table th {
-        font-size: 0.85rem;
-        padding: 0.5rem;
+      .navbar nav {
+        display: none;
       }
     }
   </style>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const assets = [
-        { name: "Bitcoin", quantity: 0.001, storage: "Cold Wallet", value: 75000000, purchaseCost: 60000000 },
-        { name: "Cash", quantity: 1000000, storage: "Bank", value: 1000000, purchaseCost: 1000000 },
+        { name: "Bitcoin", quantity: 0.001, value: 1500000 },
+        { name: "Uang Kas", quantity: "-", value: 1500000 },
       ];
 
-      const monthlyPurchaseCost = [5000000, 7000000, 10000000, 11000000, 12000000, 13000000, 15000000, 16000000, 17000000, 18000000, 19000000, 20000000]; // Purchases for each month
-      const totalValue = assets.reduce((sum, asset) => sum + asset.value, 0);
-      const totalCost = assets.reduce((sum, asset) => sum + asset.purchaseCost, 0);
+      const total = 3000000;
 
       // Display total
       document.querySelector(".total-amount").textContent =
-        `Rp ${totalValue.toLocaleString()}`;
+        `Rp. ${total.toLocaleString('id-ID')},00`;
+
+      // Toggle navbar for mobile
+      const burger = document.querySelector(".burger");
+      const nav = document.querySelector(".navbar nav");
+      burger.addEventListener("click", () => {
+        nav.classList.toggle("active");
+      });
 
       // Populate table
       const assetTable = document.querySelector(".asset-table tbody");
       assets.forEach((asset) => {
-        const percentage = ((asset.value / totalValue) * 100).toFixed(2) + "%";
+        const percentage = ((asset.value / total) * 100).toFixed(2) + "%";
         const row = document.createElement("tr");
         row.innerHTML = `
           <td>${asset.name}</td>
-          <td>Rp ${asset.quantity.toLocaleString()}</td>
-          <td>${asset.storage}</td>
-          <td>Rp ${asset.value.toLocaleString()}</td>
-          <td>${percentage}</td>
+          <td>${asset.quantity}</td>
+          <td>Rp ${asset.value.toLocaleString('id-ID')} (${percentage})</td>
           <td><button class="view-btn">View</button></td>
         `;
         assetTable.appendChild(row);
       });
 
-      // Create donut chart
-      const ctx1 = document.getElementById("assetChart").getContext("2d");
-      new Chart(ctx1, {
+      // Create chart
+      const labels = assets.map(asset => asset.name);
+      const data = assets.map(asset => asset.value);
+
+      const ctx = document.getElementById("assetChart").getContext("2d");
+      new Chart(ctx, {
         type: "doughnut",
         data: {
-          labels: assets.map(asset => asset.name),
+          labels,
           datasets: [{
             label: "Asset Value",
-            data: assets.map(asset => asset.value),
+            data,
             backgroundColor: ["#58a6ff", "#1f6feb"],
             borderColor: "#0d1117",
             borderWidth: 2
@@ -228,55 +270,6 @@
                 color: "#c9d1d9"
               }
             }
-          },
-          maintainAspectRatio: false,
-        }
-      });
-
-      // Create smooth line chart for total cost and total value
-      const ctx2 = document.getElementById("lineChart").getContext("2d");
-      new Chart(ctx2, {
-        type: "line",
-        data: {
-          labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-          datasets: [
-            {
-              label: "Purchase Cost",
-              data: monthlyPurchaseCost,
-              borderColor: "#58a6ff",
-              backgroundColor: "rgba(88, 166, 255, 0.3)",
-              tension: 0.4,
-              fill: true,
-            },
-            {
-              label: "Value Now",
-              data: monthlyPurchaseCost.map((cost, index) => cost + totalValue), // Assuming constant total value added to purchase cost
-              borderColor: "#1f6feb",
-              backgroundColor: "rgba(31, 111, 235, 0.3)",
-              tension: 0.4,
-              fill: true,
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: {
-              display: true,
-              labels: {
-                color: "#c9d1d9"
-              }
-            }
-          },
-          scales: {
-            x: {
-              ticks: { color: "#c9d1d9" },
-              grid: { color: "#21262d" }
-            },
-            y: {
-              ticks: { color: "#c9d1d9" },
-              grid: { color: "#21262d" }
-            }
           }
         }
       });
@@ -284,63 +277,50 @@
   </script>
 </head>
 <body>
-  <div class="wrapper">
-    <!-- Navbar -->
-    <header class="navbar">
-      <div class="logo">
-        <span>&lt;/&gt;</span>
-        <span>APT</span>
-      </div>
-      <nav>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="#why">Why</a></li>
-          <li><a href="#project">Project</a></li>
-          <li><a href="#treasury">Treasury</a></li>
-        </ul>
-      </nav>
-    </header>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">APT Treasury</div>
+    <span class="burger">☰</span>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Why</a></li>
+        <li><a href="#">Projects</a></li>
+        <li><a href="#">Treasury</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <!-- Treasury Section -->
-    <section id="treasury">
-      <div class="treasury-header">
-        <h1>Treasury Overview</h1>
-        <div class="total-amount">Rp 77,500,000</div>
-      </div>
-      <div class="treasury-details">
-        <div class="charts">
-          <div class="chart-container" style="height: 300px;">
-            <canvas id="assetChart"></canvas>
-            <div class="chart-legend">Asset Breakdown</div>
-          </div>
-          <div class="chart-container" style="height: 300px;">
-            <canvas id="lineChart"></canvas>
-            <div class="chart-legend">Monthly Purchase vs Value</div>
-          </div>
-        </div>
+  <!-- Treasury Section -->
+  <section class="treasury-header">
+    <h1>Our Balance</h1>
+    <p class="total-amount">Loading...</p>
+  </section>
 
-        <table class="asset-table">
-          <thead>
-            <tr>
-              <th>Asset Name</th>
-              <th>Quantity</th>
-              <th>Storage</th>
-              <th>Value (Rp)</th>
-              <th>Percentage</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Asset rows will be inserted here -->
-          </tbody>
-        </table>
-      </div>
-    </section>
+  <section class="treasury-details">
+    <div class="chart-container">
+      <canvas id="assetChart"></canvas>
+    </div>
+    <table class="asset-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Value (Rp)</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Populated by JavaScript -->
+      </tbody>
+    </table>
+  </section>
 
-    <!-- Footer -->
-    <footer>
-      <p>Made with <img src="https://www.freewear.org/images/articles/detail/FW0459_Dise%C3%B1o.png" alt="Logo"/> by APT Team</p>
-    </footer>
-  </div>
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Powered by <a href="https://www.gnu.org" target="_blank">GNU</a> & 
+      <a href="https://www.bitcoin.org" target="_blank">Bitcoin</a>
+    </p>
+  </footer>
 </body>
 </html>
