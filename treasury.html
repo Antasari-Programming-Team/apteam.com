@@ -74,28 +74,41 @@
     }
 
     .treasury-header .total-amount {
-      font-size: 2.5rem;
+      font-size: 2rem;
       font-weight: bold;
       color: #c9d1d9;
     }
 
     .treasury-details {
-      flex: 1;
       padding: 2rem;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
+    .charts {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
     .chart-container {
-      width: 50%;
+      width: 40%;
       max-width: 400px;
-      margin: 2rem 0;
+      margin: 1rem 0;
+    }
+
+    .chart-container .chart-legend {
+      text-align: center;
+      margin-top: 10px;
+      color: #c9d1d9;
     }
 
     .asset-table {
       width: 100%;
-      max-width: 800px;
+      max-width: 1200px;
       border-collapse: collapse;
       margin-top: 1rem;
     }
@@ -131,66 +144,76 @@
     }
 
     /* Footer */
-    .footer {
+    footer {
+      background: #0d1117;
+      color: #c9d1d9;
       text-align: center;
-      padding: 0.5rem;
-      background: #161b22;
-      border-top: 1px solid #21262d;
+      padding: 1rem 0;
+      margin-top: 2rem;
     }
 
-    .footer a {
-      color: #58a6ff;
+    footer img {
+      width: 15px;
     }
 
-    .footer img {
-      height: 20px;
-      margin: 0 5px;
-      vertical-align: middle;
+    /* Responsiveness */
+    @media (max-width: 768px) {
+      .charts {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .chart-container {
+        width: 90%;
+      }
+
+      .asset-table td, .asset-table th {
+        font-size: 0.85rem;
+        padding: 0.5rem;
+      }
     }
   </style>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const assets = [
-        { name: "ETH", quantity: 100, storage: "Metamask", value: 150000000 },
-        { name: "BTC", quantity: 5, storage: "Cold Wallet", value: 75000000 },
-        { name: "USDT", quantity: 1000, storage: "Binance", value: 50000000 },
+        { name: "Bitcoin", quantity: 0.001, storage: "Cold Wallet", value: 75000000, purchaseCost: 60000000 },
+        { name: "Cash", quantity: 1000000, storage: "Bank", value: 1000000, purchaseCost: 1000000 },
       ];
 
-      const total = assets.reduce((sum, asset) => sum + asset.value, 0);
+      const monthlyPurchaseCost = [5000000, 7000000, 10000000, 11000000, 12000000, 13000000, 15000000, 16000000, 17000000, 18000000, 19000000, 20000000]; // Purchases for each month
+      const totalValue = assets.reduce((sum, asset) => sum + asset.value, 0);
+      const totalCost = assets.reduce((sum, asset) => sum + asset.purchaseCost, 0);
 
       // Display total
       document.querySelector(".total-amount").textContent =
-        `Rp ${total.toLocaleString()}`;
+        `Rp ${totalValue.toLocaleString()}`;
 
       // Populate table
       const assetTable = document.querySelector(".asset-table tbody");
       assets.forEach((asset) => {
-        const percentage = ((asset.value / total) * 100).toFixed(2) + "%";
+        const percentage = ((asset.value / totalValue) * 100).toFixed(2) + "%";
         const row = document.createElement("tr");
         row.innerHTML = `
           <td>${asset.name}</td>
-          <td>${asset.quantity}</td>
+          <td>Rp ${asset.quantity.toLocaleString()}</td>
           <td>${asset.storage}</td>
-          <td>Rp ${asset.value.toLocaleString()} (${percentage})</td>
+          <td>Rp ${asset.value.toLocaleString()}</td>
+          <td>${percentage}</td>
           <td><button class="view-btn">View</button></td>
         `;
         assetTable.appendChild(row);
       });
 
-      // Prepare data for chart
-      const labels = assets.map(asset => asset.name);
-      const data = assets.map(asset => asset.value);
-
-      // Create chart
-      const ctx = document.getElementById("assetChart").getContext("2d");
-      new Chart(ctx, {
+      // Create donut chart
+      const ctx1 = document.getElementById("assetChart").getContext("2d");
+      new Chart(ctx1, {
         type: "doughnut",
         data: {
-          labels,
+          labels: assets.map(asset => asset.name),
           datasets: [{
             label: "Asset Value",
-            data,
-            backgroundColor: ["#58a6ff", "#1f6feb", "#161b22"],
+            data: assets.map(asset => asset.value),
+            backgroundColor: ["#58a6ff", "#1f6feb"],
             borderColor: "#0d1117",
             borderWidth: 2
           }]
@@ -204,6 +227,55 @@
               labels: {
                 color: "#c9d1d9"
               }
+            }
+          },
+          maintainAspectRatio: false,
+        }
+      });
+
+      // Create smooth line chart for total cost and total value
+      const ctx2 = document.getElementById("lineChart").getContext("2d");
+      new Chart(ctx2, {
+        type: "line",
+        data: {
+          labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+          datasets: [
+            {
+              label: "Purchase Cost",
+              data: monthlyPurchaseCost,
+              borderColor: "#58a6ff",
+              backgroundColor: "rgba(88, 166, 255, 0.3)",
+              tension: 0.4,
+              fill: true,
+            },
+            {
+              label: "Value Now",
+              data: monthlyPurchaseCost.map((cost, index) => cost + totalValue), // Assuming constant total value added to purchase cost
+              borderColor: "#1f6feb",
+              backgroundColor: "rgba(31, 111, 235, 0.3)",
+              tension: 0.4,
+              fill: true,
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              display: true,
+              labels: {
+                color: "#c9d1d9"
+              }
+            }
+          },
+          scales: {
+            x: {
+              ticks: { color: "#c9d1d9" },
+              grid: { color: "#21262d" }
+            },
+            y: {
+              ticks: { color: "#c9d1d9" },
+              grid: { color: "#21262d" }
             }
           }
         }
@@ -224,50 +296,50 @@
           <li><a href="index.html">Home</a></li>
           <li><a href="#why">Why</a></li>
           <li><a href="#project">Project</a></li>
-          <li><a href="treasury.html">Treasury</a></li>
+          <li><a href="#treasury">Treasury</a></li>
         </ul>
       </nav>
     </header>
 
     <!-- Treasury Section -->
-    <section class="treasury-header">
-      <h1>Treasury Balance</h1>
-      <p class="total-amount">Loading...</p>
-    </section>
-
-    <section class="treasury-details">
-      <div class="chart-container">
-        <canvas id="assetChart"></canvas>
+    <section id="treasury">
+      <div class="treasury-header">
+        <h1>Treasury Overview</h1>
+        <div class="total-amount">Rp 77,500,000</div>
       </div>
-      <table class="asset-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Quantity</th>
-            <th>Storage</th>
-            <th>Value (Rp)</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Assets populated via JavaScript -->
-        </tbody>
-      </table>
+      <div class="treasury-details">
+        <div class="charts">
+          <div class="chart-container" style="height: 300px;">
+            <canvas id="assetChart"></canvas>
+            <div class="chart-legend">Asset Breakdown</div>
+          </div>
+          <div class="chart-container" style="height: 300px;">
+            <canvas id="lineChart"></canvas>
+            <div class="chart-legend">Monthly Purchase vs Value</div>
+          </div>
+        </div>
+
+        <table class="asset-table">
+          <thead>
+            <tr>
+              <th>Asset Name</th>
+              <th>Quantity</th>
+              <th>Storage</th>
+              <th>Value (Rp)</th>
+              <th>Percentage</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Asset rows will be inserted here -->
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-      <p>Powered by 
-        <a href="https://www.gnu.org" target="_blank">
-          <img src="https://www.freewear.org/images/articles/detail/FW0459_Dise%C3%B1o.png" alt="GNU Logo">
-          GNU
-        </a>
-        & 
-        <a href="https://www.bitcoin.org" target="_blank">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg" alt="Bitcoin Logo">
-          Bitcoin
-        </a>
-      </p>
+    <footer>
+      <p>Made with <img src="https://www.freewear.org/images/articles/detail/FW0459_Dise%C3%B1o.png" alt="Logo"/> by APT Team</p>
     </footer>
   </div>
 </body>
