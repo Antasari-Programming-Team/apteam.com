@@ -15,174 +15,132 @@
 
     body {
       font-family: "Courier New", Courier, monospace;
-      background: #0d1117;
-      color: #c9d1d9;
+      background: #222;
+      color: #ff8800;
       line-height: 1.6;
-    }
-
-    /* Navbar */
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      background: #161b22;
-      border-bottom: 1px solid #21262d;
-    }
-
-    .navbar .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      color: #58a6ff;
-    }
-
-    .navbar nav {
-      display: flex;
-      gap: 1.5rem;
-    }
-
-    .navbar nav ul {
-      display: flex;
-      list-style: none;
-      gap: 1.5rem;
-    }
-
-    .navbar nav ul li a {
-      text-decoration: none;
-      color: #c9d1d9;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-
-    .navbar nav ul li a:hover {
-      color: #58a6ff;
-    }
-
-    .navbar .burger {
-      display: none;
-      font-size: 1.5rem;
-      color: #c9d1d9;
-      cursor: pointer;
-    }
-
-    .navbar .burger:focus {
-      outline: none;
-    }
-
-    .navbar nav.active {
+      text-align: center; /* Center align all text by default */
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      position: absolute;
-      top: 60px;
-      right: 10px;
-      background: #161b22;
-      border: 1px solid #21262d;
-      border-radius: 8px;
-      padding: 10px;
-      z-index: 1000;
-    }
-
-    .navbar nav.active ul {
-      flex-direction: column;
-      gap: 10px;
     }
 
     /* Treasury Header */
     .treasury-header {
       text-align: center;
-      padding: 2rem 1rem;
-      background: #161b22;
-      border-bottom: 1px solid #21262d;
+      padding: 3rem 1rem;
+      background: #333;
+      border-bottom: 1px solid #ff8800;
+      position: relative;
     }
 
     .treasury-header h1 {
-      font-size: 2rem;
-      color: #58a6ff;
+      font-size: 3rem;
       margin-bottom: 1rem;
+      text-transform: uppercase;
+      color: #ffbb55;
+      letter-spacing: 2px;
+    }
+
+    .treasury-header h1:after {
+      content: '';
+      display: block;
+      width: 50px;
+      height: 4px;
+      background: #ff8800;
+      margin: 0.5rem auto 0;
     }
 
     .treasury-header .total-amount {
-      font-size: 3rem;
+      font-size: 4rem;
       font-weight: bold;
-      color: #c9d1d9;
       animation: fadeIn 1s ease-in-out;
+      color: #ff8800;
+    }
+
+    /* Section Titles */
+    .section-title {
+      font-size: 1.8rem;
+      margin: 2rem 0 1rem;
+      text-transform: uppercase;
+      color: #ffbb55;
+    }
+
+    .section-title:after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 3px;
+      background: #ff8800;
+      margin: 0.5rem auto 0;
     }
 
     /* Treasury Details */
     .treasury-details {
-      padding: 2rem 1rem;
       display: flex;
       flex-direction: column;
       align-items: center;
+      margin-top: 3rem;
       gap: 2rem;
     }
 
     .chart-container {
       width: 100%;
-      max-width: 400px;
+      max-width: 300px; /* Reduced size of donut chart */
     }
 
-    .asset-table {
-      width: 100%;
+    /* Tables */
+    .asset-table,
+    .transaction-history {
+      width: 90%; /* Removed extra margin for better proportionality */
       max-width: 800px;
       border-collapse: collapse;
-      margin-top: 1rem;
-      background: #161b22;
-      border: 1px solid #21262d;
-      border-radius: 8px;
-      overflow: hidden;
+      margin: 0 auto 2rem auto;
+      background: #333;
+      border: 1px solid #ff8800;
+      border-radius: 10px;
     }
 
     .asset-table th,
-    .asset-table td {
+    .asset-table td,
+    .transaction-history th,
+    .transaction-history td {
       padding: 0.75rem 1rem;
       text-align: left;
     }
 
-    .asset-table th {
-      background: #21262d;
-      color: #58a6ff;
+    .asset-table th,
+    .transaction-history th {
+      background: #444;
+      color: #ff8800;
       font-weight: 600;
     }
 
-    .asset-table tr:nth-child(even) {
-      background: #1a1e25;
+    .asset-table tr:nth-child(even),
+    .transaction-history tr:nth-child(even) {
+      background: #555;
     }
 
-    .asset-table tr:hover {
-      background: #21262d;
+    .asset-table tr:hover,
+    .transaction-history tr:hover {
+      background: #444;
     }
 
-    .asset-table td {
-      color: #c9d1d9;
-    }
-
-    .view-btn {
-      background: #58a6ff;
-      color: #0d1117;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .view-btn:hover {
-      background: #1f6feb;
+    .asset-table td,
+    .transaction-history td {
+      color: #ff8800;
     }
 
     /* Footer */
     .footer {
       text-align: center;
       padding: 1rem;
-      background: #161b22;
-      border-top: 1px solid #21262d;
+      background: #333;
+      border-top: 1px solid #ff8800;
+      margin-top: auto; /* Ensures footer stays at the bottom */
     }
 
     .footer a {
-      color: #58a6ff;
+      color: #ff8800;
       text-decoration: none;
     }
 
@@ -195,17 +153,6 @@
       to {
         opacity: 1;
         transform: translateY(0);
-      }
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .navbar .burger {
-        display: block;
-      }
-
-      .navbar nav {
-        display: none;
       }
     }
   </style>
@@ -222,14 +169,7 @@
       document.querySelector(".total-amount").textContent =
         `Rp ${total.toLocaleString('id-ID')},00`;
 
-      // Toggle navbar for mobile
-      const burger = document.querySelector(".burger");
-      const nav = document.querySelector(".navbar nav");
-      burger.addEventListener("click", () => {
-        nav.classList.toggle("active");
-      });
-
-      // Populate table
+      // Populate asset table
       const assetTable = document.querySelector(".asset-table tbody");
       assets.forEach((asset) => {
         const percentage = ((asset.value / total) * 100).toFixed(2) + "%";
@@ -238,7 +178,6 @@
           <td>${asset.name}</td>
           <td>${asset.quantity}</td>
           <td>Rp ${asset.value.toLocaleString('id-ID')} (${percentage})</td>
-          <td><button class="view-btn">View</button></td>
         `;
         assetTable.appendChild(row);
       });
@@ -255,8 +194,8 @@
           datasets: [{
             label: "Asset Value",
             data,
-            backgroundColor: ["#58a6ff", "#1f6feb"],
-            borderColor: "#0d1117",
+            backgroundColor: ["#ff8800", "#ffbb55"],
+            borderColor: "#222",
             borderWidth: 2
           }]
         },
@@ -267,30 +206,34 @@
               display: true,
               position: "top",
               labels: {
-                color: "#c9d1d9"
+                color: "#ff8800"
               }
             }
           }
         }
       });
+
+      // Add sample transaction history
+      const transactions = [
+        { date: "2024-12-01", amount: 500000, description: "Deposit" },
+        { date: "2024-12-05", amount: -100000, description: "Withdrawal" },
+        { date: "2024-12-10", amount: 1000000, description: "Deposit" }
+      ];
+
+      const transactionTable = document.querySelector(".transaction-history tbody");
+      transactions.forEach((transaction) => {
+        const row = document.createElement("tr");
+        row.innerHTML = ` 
+          <td>${transaction.date}</td>
+          <td>Rp ${transaction.amount.toLocaleString('id-ID')}</td>
+          <td>${transaction.description}</td>
+        `;
+        transactionTable.appendChild(row);
+      });
     });
   </script>
 </head>
 <body>
-  <!-- Navbar -->
-  <header class="navbar">
-    <div class="logo">APT Treasury</div>
-    <span class="burger">☰</span>
-    <nav>
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Why</a></li>
-        <li><a href="#">Projects</a></li>
-        <li><a href="#">Treasury</a></li>
-      </ul>
-    </nav>
-  </header>
-
   <!-- Treasury Section -->
   <section class="treasury-header">
     <h1>Our Balance</h1>
@@ -301,13 +244,28 @@
     <div class="chart-container">
       <canvas id="assetChart"></canvas>
     </div>
+
+    <h2 class="section-title">Klasifikasi Asset</h2>
     <table class="asset-table">
       <thead>
         <tr>
           <th>Name</th>
           <th>Quantity</th>
           <th>Value (Rp)</th>
-          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Populated by JavaScript -->
+      </tbody>
+    </table>
+
+    <h2 class="section-title">Transaksi</h2>
+    <table class="transaction-history">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Amount (Rp)</th>
+          <th>Description</th>
         </tr>
       </thead>
       <tbody>
