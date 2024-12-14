@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Antasari Programming Team</title>
+    <style>
+        /* Styling for the body and layout */
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #1e1e1e;
+            color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .welcome-container {
+            text-align: center; /* Center alignment for welcome message */
+            margin-bottom: 20px;
+            color: orange;
+        }
+
+        .terminal {
+            background-color: #2d2d2d;
+            width: 80%;
+            max-width: 900px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            text-align: left; /* Align text to the left */
+            color: orange;
+        }
+
+        #terminalOutput {
+            white-space: pre-wrap;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .input-line {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-start; /* Align input to the left */
+            align-items: center;
+        }
+
+        .prompt {
+            color: orange;
+        }
+
+        input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: orange;
+            font-size: 16px;
+            width: 50%;
+            text-align: left; /* Align input text to the left */
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        footer {
+            color: #f7f7f7;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome message container -->
+    <div class="welcome-container">
+        <p>Welcome to</p>
+        <h1>Antasari Programming Team</h1>
+    </div>
+
+    <!-- Terminal simulation -->
+    <div class="terminal">
+        <div id="terminalOutput"></div>
+        <div class="input-line">
+            <span class="prompt">C:\Users\> </span><input type="text" id="terminalInput" autofocus />
+        </div>
+    </div>
+
+    <footer>
+        Powered by GNU and Bitcoin
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const terminalOutput = document.getElementById('terminalOutput');
+            const terminalInput = document.getElementById('terminalInput');
+
+            const welcomeMessage = [
+                "Type 'Menu' to get to know us better."
+            ];
+
+            let currentLine = 0;
+
+            function typeMessage(message, callback) {
+                let i = 0;
+                const interval = setInterval(function () {
+                    terminalOutput.innerHTML += message.charAt(i);
+                    i++;
+                    if (i === message.length) {
+                        clearInterval(interval);
+                        callback();
+                    }
+                }, 50);
+            }
+
+            function displayWelcome() {
+                if (currentLine < welcomeMessage.length) {
+                    typeMessage(welcomeMessage[currentLine], function () {
+                        currentLine++;
+                        terminalOutput.innerHTML += '\n';
+                        displayWelcome();
+                    });
+                } else {
+                    terminalInput.focus();
+                }
+            }
+
+            terminalInput.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter') {
+                    const inputValue = terminalInput.value.trim();
+                    if (inputValue === 'help') {
+                        terminalOutput.innerHTML += '\n> help\nAvailable commands:\n- help\n- clear\n- menu\n';
+                    } else if (inputValue === 'clear') {
+                        terminalOutput.innerHTML = '';
+                        displayWelcome();
+                    } else if (inputValue.toLowerCase() === 'menu') {
+                        terminalOutput.innerHTML += `
+> Menu
+1. About Us
+2. Projects
+3. Treasury
+4. Blog
+
+Type the number to navigate (1, 2, 3, or 4), or type "clear" to reset.
+`;
+                    } else if (inputValue === '1') {
+                        window.location.href = '/about-us'; // Replace with your actual URL
+                    } else if (inputValue === '2') {
+                        window.location.href = '/projects'; // Replace with your actual URL
+                    } else if (inputValue === '3') {
+                        window.location.href = '/treasury'; // Replace with your actual URL
+                    } else if (inputValue === '4') {
+                        window.location.href = '/blog'; // Replace with your actual URL
+                    }
+                    terminalInput.value = '';
+                    terminalOutput.innerHTML += '\n' + '> ';
+                }
+            });
+
+            displayWelcome();
+        });
+    </script>
+</body>
+</html>
