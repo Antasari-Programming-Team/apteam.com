@@ -277,11 +277,11 @@
 /* Responsive Design */
 @media (max-width: 600px) {
     .treasury-header h1 {
-        font-size: 32px;
+        font-size: 24px;
     }
 
     .treasury-header .total-amount {
-        font-size: 48px;
+        font-size: 36px;
     }
 
     .section-title {
