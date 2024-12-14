@@ -3,324 +3,92 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>APT Treasury Upgrade</title>
+  <title>Our Treasury</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    /* Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: "Courier New", Courier, monospace;
-      background: #0d1117;
-      color: #c9d1d9;
-      line-height: 1.6;
-    }
-
-    /* Navbar */
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      background: #161b22;
-      border-bottom: 1px solid #21262d;
-    }
-
-    .navbar .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      color: #58a6ff;
-    }
-
-    .navbar nav {
-      display: flex;
-      gap: 1.5rem;
-    }
-
-    .navbar nav ul {
-      display: flex;
-      list-style: none;
-      gap: 1.5rem;
-    }
-
-    .navbar nav ul li a {
-      text-decoration: none;
-      color: #c9d1d9;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-
-    .navbar nav ul li a:hover {
-      color: #58a6ff;
-    }
-
-    .navbar .burger {
-      display: none;
-      font-size: 1.5rem;
-      color: #c9d1d9;
-      cursor: pointer;
-    }
-
-    .navbar .burger:focus {
-      outline: none;
-    }
-
-    .navbar nav.active {
-      display: flex;
-      flex-direction: column;
-      position: absolute;
-      top: 60px;
-      right: 10px;
-      background: #161b22;
-      border: 1px solid #21262d;
-      border-radius: 8px;
-      padding: 10px;
-      z-index: 1000;
-    }
-
-    .navbar nav.active ul {
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    /* Treasury Header */
-    .treasury-header {
-      text-align: center;
-      padding: 2rem 1rem;
-      background: #161b22;
-      border-bottom: 1px solid #21262d;
-    }
-
-    .treasury-header h1 {
-      font-size: 2rem;
-      color: #58a6ff;
-      margin-bottom: 1rem;
-    }
-
-    .treasury-header .total-amount {
-      font-size: 3rem;
-      font-weight: bold;
-      color: #c9d1d9;
-      animation: fadeIn 1s ease-in-out;
-    }
-
-    /* Treasury Details */
-    .treasury-details {
-      padding: 2rem 1rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2rem;
-    }
-
-    .chart-container {
-      width: 100%;
-      max-width: 400px;
-    }
-
-    .asset-table {
-      width: 100%;
-      max-width: 800px;
-      border-collapse: collapse;
-      margin-top: 1rem;
-      background: #161b22;
-      border: 1px solid #21262d;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-
-    .asset-table th,
-    .asset-table td {
-      padding: 0.75rem 1rem;
-      text-align: left;
-    }
-
-    .asset-table th {
-      background: #21262d;
-      color: #58a6ff;
-      font-weight: 600;
-    }
-
-    .asset-table tr:nth-child(even) {
-      background: #1a1e25;
-    }
-
-    .asset-table tr:hover {
-      background: #21262d;
-    }
-
-    .asset-table td {
-      color: #c9d1d9;
-    }
-
-    .view-btn {
-      background: #58a6ff;
-      color: #0d1117;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .view-btn:hover {
-      background: #1f6feb;
-    }
-
-    /* Footer */
-    .footer {
-      text-align: center;
-      padding: 1rem;
-      background: #161b22;
-      border-top: 1px solid #21262d;
-    }
-
-    .footer a {
-      color: #58a6ff;
-      text-decoration: none;
-    }
-
-    /* Animation */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .navbar .burger {
-        display: block;
-      }
-
-      .navbar nav {
-        display: none;
-      }
-    }
-  </style>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const assets = [
-        { name: "Bitcoin", quantity: 0.001, value: 1500000 },
-        { name: "Uang Kas", quantity: "-", value: 1500000 },
-      ];
-
-      const total = 3000000;
-
-      // Display total
-      document.querySelector(".total-amount").textContent =
-        `Rp ${total.toLocaleString('id-ID')},00`;
-
-      // Toggle navbar for mobile
-      const burger = document.querySelector(".burger");
-      const nav = document.querySelector(".navbar nav");
-      burger.addEventListener("click", () => {
-        nav.classList.toggle("active");
-      });
-
-      // Populate table
-      const assetTable = document.querySelector(".asset-table tbody");
-      assets.forEach((asset) => {
-        const percentage = ((asset.value / total) * 100).toFixed(2) + "%";
-        const row = document.createElement("tr");
-        row.innerHTML = ` 
-          <td>${asset.name}</td>
-          <td>${asset.quantity}</td>
-          <td>Rp ${asset.value.toLocaleString('id-ID')} (${percentage})</td>
-          <td><button class="view-btn">View</button></td>
-        `;
-        assetTable.appendChild(row);
-      });
-
-      // Create chart
-      const labels = assets.map(asset => asset.name);
-      const data = assets.map(asset => asset.value);
-
-      const ctx = document.getElementById("assetChart").getContext("2d");
-      new Chart(ctx, {
-        type: "doughnut",
-        data: {
-          labels,
-          datasets: [{
-            label: "Asset Value",
-            data,
-            backgroundColor: ["#58a6ff", "#1f6feb"],
-            borderColor: "#0d1117",
-            borderWidth: 2
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: {
-              display: true,
-              position: "top",
-              labels: {
-                color: "#c9d1d9"
-              }
-            }
-          }
-        }
-      });
-    });
-  </script>
+<link rel="stylesheet" href="src/css/treasury.css">
 </head>
 <body>
-  <!-- Navbar -->
-  <header class="navbar">
-    <div class="logo">APT Treasury</div>
-    <span class="burger">☰</span>
-    <nav>
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Why</a></li>
-        <li><a href="#">Projects</a></li>
-        <li><a href="#">Treasury</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <!-- Treasury Section -->
-  <section class="treasury-header">
-    <h1>Our Balance</h1>
-    <p class="total-amount">Loading...</p>
-  </section>
-
-  <section class="treasury-details">
-    <div class="chart-container">
-      <canvas id="assetChart"></canvas>
+  <nav>
+    <div class="hamburger" id="hamburger">
+      <div></div>
+      <div></div>
+      <div></div>
     </div>
-    <table class="asset-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Quantity</th>
-          <th>Value (Rp)</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Populated by JavaScript -->
-      </tbody>
-    </table>
-  </section>
+    <div class="desktop-left nav-links">
+      <a href="#about">About Us</a>
+      <a href="#projects">Projects</a>
+    </div>
+    <div class="logo">APT</div>
+    <div class="desktop-right nav-links">
+      <a href="treasury.html">Treasury</a>
+      <a href="#blog">Blog</a>
+    </div>
+    <div class="nav-links mobile" id="mobile-nav">
+      <a href="#about">About Us</a>
+      <a href="#projects">Projects</a>
+      <a href="treasury.html">Treasury</a>
+      <a href="#blog">Blog</a>
+    </div>
+  </nav>
+   <!-- Treasury Header -->
+   <div class="treasury-header">
+    <h1>Our Balance:</h1>
+    <div id="totalBalance" class="total-amount">Rp 0</div>
+</div>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <p>Powered by <a href="https://www.gnu.org" target="_blank">GNU</a> & 
-      <a href="https://www.bitcoin.org" target="_blank">Bitcoin</a>
-    </p>
-  </footer>
+<!-- Donut Chart Section -->
+<h2 class="section-title">Asset Distribution</h2>
+<div class="chart-container">
+    <canvas id="donutChart"></canvas>
+</div>
+
+<!-- Asset Table Section -->
+<h2 class="section-title">Assets</h2>
+<table class="asset-table" id="assetTable">
+    <thead>
+        <tr>
+            <th>Asset</th>
+            <th>Quantity</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Rupiah (Cash)</td>
+            <td>50.000,00</td>
+            <td>50000</td>
+        </tr>
+        <tr>
+            <td>Bitcoin</td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- Transaction History Section -->
+<h2 class="section-title">Transaction History</h2>
+<table class="transaction-history">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>2024-12-08</td>
+            <td>Team's Donate</td>
+            <td>Rp 50.000,00</td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- Footer -->
+<div class="footer">
+    <p>&copy; 2024 Treasury Dashboard. All rights reserved.</p>
+</div>
+  <script src="src/js/treasury.js"></script>
 </body>
 </html>

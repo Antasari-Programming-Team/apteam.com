@@ -1,0 +1,302 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #222;
+    color: #ff8800;
+    margin: 0 20px;
+    line-height: 1.6;
+    text-align: center;
+    
+  }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #333;
+    border: 2px solid #ff8800;
+    padding: 10px 20px;
+    border-radius: 8px;
+    margin: 20px auto 0;
+    max-width: 1200px;
+    box-shadow: 0 4px 8px rgba(255, 136, 0, 0.3);
+    position: sticky;
+    top: 20px;
+    z-index: 1000;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ff8800;
+    text-transform: uppercase;
+    text-align: center;
+    flex: 1;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: #ff8800;
+    font-size: 1rem;
+    padding: 5px 10px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    transition: 0.3s;
+  }
+
+  .nav-links a:hover {
+    background-color: #444;
+    border: 1px solid #ff8800;
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+  }
+
+  .hamburger div {
+    width: 25px;
+    height: 3px;
+    background-color: #ff8800;
+    margin: 3px 0;
+    transition: 0.4s;
+  }
+
+  .nav-links.mobile {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    width: 250px;
+    background: #333;
+    border-right: 2px solid #ff8800;
+    padding: 20px;
+    z-index: 999;
+    transition: left 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .nav-links.mobile.show {
+    left: 0;
+  }
+
+  .desktop-left {
+    display: flex;
+    gap: 15px;
+    margin-right: auto;
+  }
+
+  .desktop-right {
+    display: flex;
+    gap: 15px;
+    margin-left: auto;
+  }
+
+  /* Responsive Design */
+  @media screen and (max-width: 768px) {
+    .hamburger {
+      display: flex;
+    }
+
+    .desktop-left,
+    .desktop-right {
+      display: none;
+    }
+
+    .logo {
+      text-align: center;
+      flex: 1;
+    }
+
+    nav {
+      justify-content: space-between;
+    }
+  }
+   
+
+/* body {
+    font-family: "Courier New", Courier, monospace;
+    background: #222;
+    color: #ff8800;
+    line-height: 1.6;
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+} */
+
+/* Treasury Header */
+.treasury-header {
+    max-width: 1200px;
+    margin: 20px auto 0;
+    text-align: center;
+    padding: 48px 16px;
+    background: #333;
+    border: 1px solid #ff8800;
+    position: relative;
+    top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(255, 136, 0, 0.3);
+
+}
+
+.treasury-header h1 {
+    font-size: 48px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    color: #ffbb55;
+    letter-spacing: 2px;
+}
+
+.treasury-header h1:after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 4px;
+    background: #ff8800;
+    margin: 8px auto 0;
+}
+
+.treasury-header .total-amount {
+    font-size: 64px;
+    font-weight: bold;
+    animation: fadeIn 1s ease-in-out;
+    color: #ff8800;
+}
+
+/* Section Titles */
+.section-title {
+    font-size: 28.8px;
+    margin: 32px 0 16px;
+    text-transform: uppercase;
+    color: #ffbb55;
+}
+
+.section-title:after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 3px;
+    background: #ff8800;
+    margin: 8px auto 0;
+}
+
+/* Treasury Details */
+.treasury-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 48px;
+    gap: 32px;
+}
+
+.chart-container {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto 32px;
+}
+
+/* Tables */
+.asset-table,
+.transaction-history {
+    width: 90%;
+    max-width: 800px;
+    border-collapse: collapse;
+    margin: 0 auto 32px auto;
+    background: #333;
+    border: 1px solid #ff8800;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.asset-table th,
+.asset-table td,
+.transaction-history th,
+.transaction-history td {
+    padding: 16px;
+    text-align: center;
+}
+
+.asset-table th,
+.transaction-history th {
+    background: #444;
+    color: #ff8800;
+    font-weight: 600;
+}
+
+.asset-table tr:nth-child(even),
+.transaction-history tr:nth-child(even) {
+    background: #555;
+}
+
+.asset-table tr:hover,
+.transaction-history tr:hover {
+    background: #444;
+}
+
+.asset-table td,
+.transaction-history td {
+    color: #ff8800;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 16px;
+    background: #333;
+    border-top: 1px solid #ff8800;
+    margin-top: auto;
+    margin: 0 -20px;
+}
+
+.footer a {
+    color: #ff8800;
+    text-decoration: none;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .treasury-header h1 {
+        font-size: 32px;
+    }
+
+    .treasury-header .total-amount {
+        font-size: 48px;
+    }
+
+    .section-title {
+        font-size: 24px;
+    }
+
+    .asset-table th,
+    .asset-table td,
+    .transaction-history th,
+    .transaction-history td {
+        padding: 12px;
+    }
+
+    .chart-container {
+        max-width: 100%;
+        padding: 16px;
+    }
+}
