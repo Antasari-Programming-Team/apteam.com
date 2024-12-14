@@ -207,7 +207,7 @@
 /* Tables */
 .asset-table,
 .transaction-history {
-    width: 90%;
+    width: 100%;
     max-width: 800px;
     border-collapse: collapse;
     margin: 0 auto 32px auto;
