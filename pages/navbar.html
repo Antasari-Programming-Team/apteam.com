@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APT Navbar with Offcanvas</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background-color: #222;
+      color: #ff8800;
+      margin: 0 20px;
+      line-height: 1.6;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #333;
+      border: 2px solid #ff8800;
+      padding: 10px 20px;
+      border-radius: 8px;
+      margin: 20px auto 0;
+      max-width: 1200px;
+      box-shadow: 0 4px 8px rgba(255, 136, 0, 0.3);
+      position: sticky;
+      top: 20px;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ff8800;
+      text-transform: uppercase;
+      text-align: center;
+      flex: 1;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #ff8800;
+      font-size: 1rem;
+      padding: 5px 10px;
+      border: 1px solid transparent;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover {
+      background-color: #444;
+      border: 1px solid #ff8800;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: #ff8800;
+      margin: 3px 0;
+      transition: 0.4s;
+    }
+
+    .nav-links.mobile {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      height: 100%;
+      width: 250px;
+      background: #333;
+      border-right: 2px solid #ff8800;
+      padding: 20px;
+      z-index: 999;
+      transition: left 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .nav-links.mobile.show {
+      left: 0;
+    }
+
+    .desktop-left {
+      display: flex;
+      gap: 15px;
+      margin-right: auto;
+    }
+
+    .desktop-right {
+      display: flex;
+      gap: 15px;
+      margin-left: auto;
+    }
+
+    /* Responsive Design */
+    @media screen and (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .desktop-left,
+      .desktop-right {
+        display: none;
+      }
+
+      .logo {
+        text-align: center;
+        flex: 1;
+      }
+
+      nav {
+        justify-content: space-between;
+      }
+    }
+
+    .content {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #333;
+      color: #ff8800;
+      border-radius: 8px;
+      border: 2px solid #ff8800;
+      box-shadow: 0 4px 8px rgba(255, 136, 0, 0.3);
+    }
+
+    .content h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .content p {
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="hamburger" id="hamburger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="desktop-left nav-links">
+      <a href="#about">About Us</a>
+      <a href="#projects">Projects</a>
+    </div>
+    <div class="logo">APT</div>
+    <div class="desktop-right nav-links">
+      <a href="#treasury">Treasury</a>
+      <a href="#blog">Blog</a>
+    </div>
+    <div class="nav-links mobile" id="mobile-nav">
+      <a href="#about">About Us</a>
+      <a href="#projects">Projects</a>
+      <a href="#treasury">Treasury</a>
+      <a href="#blog">Blog</a>
+    </div>
+  </nav>
+
+  <div class="content">
+    <h1>Welcome to APT</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin euismod, urna at convallis fermentum, sapien magna dapibus arcu, eget lacinia ex nunc a enim.</p>
+    <p>Curabitur auctor odio non sapien facilisis, ut fermentum orci bibendum. Integer volutpat arcu vitae libero consectetur viverra.</p>
+    <p>Sed malesuada ligula a nulla sodales, eget aliquam erat venenatis. Ut a turpis nec nulla ultricies vulputate sit amet non ligula.</p>
+    <p>Vivamus pellentesque lectus ac nunc fermentum, quis volutpat lacus bibendum. Nam vel quam in ipsum malesuada aliquam a nec nunc.</p>
+    <p>Donec tempus, enim sit amet vehicula cursus, elit nisi fermentum arcu, nec malesuada urna neque nec turpis. Phasellus sit amet enim in odio volutpat consectetur.</p>
+    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla facilisi.</p>
+    <p>Mauris vel consequat mauris. Nullam vehicula massa sed mi tincidunt, nec facilisis mauris auctor.</p>
+  </div>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+
+    hamburger.addEventListener('click', () => {
+      mobileNav.classList.toggle('show');
+    });
+
+    document.addEventListener('click', (event) => {
+      const isClickInsideHamburger = hamburger.contains(event.target);
+      const isClickInsideMenu = mobileNav.contains(event.target);
+
+      if (!isClickInsideHamburger && !isClickInsideMenu && mobileNav.classList.contains('show')) {
+        mobileNav.classList.remove('show');
+      }
+    });
+  </script>
+</body>
+</html>
