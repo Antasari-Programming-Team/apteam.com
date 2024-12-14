@@ -25,6 +25,11 @@
             color: orange;
         }
 
+        .welcome-container img {
+            max-width: 150px;
+            margin-bottom: 10px;
+        }
+
         .terminal {
             background-color: #2d2d2d;
             width: 80%;
@@ -78,6 +83,7 @@
 <body>
     <!-- Welcome message container -->
     <div class="welcome-container">
+        <img src="../src/imgs/logoapt.png" alt="Logo Antasari Programming Team">
         <p>Welcome to</p>
         <h1>Antasari Programming Team</h1>
     </div>
@@ -100,7 +106,11 @@
             const terminalInput = document.getElementById('terminalInput');
 
             const welcomeMessage = [
-                "Type 'Menu' to get to know us better."
+                "Type a number to navigate:",
+                "1. About Us",
+                "2. Projects",
+                "3. Treasury",
+                "4. Blog"
             ];
 
             let currentLine = 0;
@@ -132,21 +142,11 @@
             terminalInput.addEventListener('keydown', function (event) {
                 if (event.key === 'Enter') {
                     const inputValue = terminalInput.value.trim();
-                    if (inputValue === 'help') {
-                        terminalOutput.innerHTML += '\n> help\nAvailable commands:\n- help\n- clear\n- menu\n';
-                    } else if (inputValue === 'clear') {
+                    terminalOutput.innerHTML += `\n> ${inputValue}\n`; // Display input in terminal
+
+                    if (inputValue === 'clear') {
                         terminalOutput.innerHTML = '';
                         displayWelcome();
-                    } else if (inputValue.toLowerCase() === 'menu') {
-                        terminalOutput.innerHTML += `
-> Menu
-1. About Us
-2. Projects
-3. Treasury
-4. Blog
-
-Type the number to navigate (1, 2, 3, or 4), or type "clear" to reset.
-`;
                     } else if (inputValue === '1') {
                         window.location.href = '/about-us'; // Replace with your actual URL
                     } else if (inputValue === '2') {
@@ -155,9 +155,11 @@ Type the number to navigate (1, 2, 3, or 4), or type "clear" to reset.
                         window.location.href = '/treasury'; // Replace with your actual URL
                     } else if (inputValue === '4') {
                         window.location.href = '/blog'; // Replace with your actual URL
+                    } else {
+                        terminalOutput.innerHTML += "Invalid command. Please type 1, 2, 3, or 4.\n";
                     }
+
                     terminalInput.value = '';
-                    terminalOutput.innerHTML += '\n' + '> ';
                 }
             });
 
