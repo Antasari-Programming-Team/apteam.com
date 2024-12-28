@@ -3,169 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Antasari Programming Team</title>
-    <link rel="icon" href="src/imgs/logoapt.png" sizes="32x32" type="image/png">
+    <title>Antasari Programming Team - Hero Section</title>
     <style>
-        /* Styling for the body and layout */
-        body {
-          font-family: 'Courier New', Courier, monospace;
-          background-color: #1e1e1e;
-          color: #f7f7f7;
-          margin: 0;
-          padding: 0 20px; /* Tambahkan padding kiri dan kanan */
-          height: 100vh;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          flex-direction: column;
-      }
-
-        .welcome-container {
-            text-align: center; /* Center alignment for welcome message */
-            margin-bottom: 20px;
-            color: orange;
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        .welcome-container img {
-            max-width: 150px;
-            margin-bottom: 10px;
+        /* Hero Section Container */
+        .hero-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a192f 0%, #112240 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
         }
 
-        .terminal {
-            background-color: #2d2d2d;
-            width: 80%;
-            max-width: 900px;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            text-align: left; /* Align text to the left */
-            color: orange;
+        /* Animated Background Pattern */
+        .hero-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25px 25px, rgba(255, 255, 255, 0.2) 2%, transparent 0%),
+                radial-gradient(circle at 75px 75px, rgba(255, 255, 255, 0.2) 2%, transparent 0%);
+            background-size: 100px 100px;
+            animation: patternMove 20s linear infinite;
+            opacity: 0.3;
         }
 
-        #terminalOutput {
-            white-space: pre-wrap;
-            font-size: 16px;
-            line-height: 1.5;
-        }
-
-        .input-line {
-            margin-top: 20px;
+        /* Hero Content Wrapper */
+        .hero-content {
             display: flex;
-            justify-content: flex-start; /* Align input to the left */
             align-items: center;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
         }
 
-        .prompt {
-            color: orange;
+        /* Left Section */
+        .hero-text {
+            flex: 1;
+            padding-right: 2rem;
         }
 
-        input {
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #64ffda, #00bcd4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleFade 1s ease-in;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            color: #8892b0;
+            margin-bottom: 2rem;
+            animation: subtitleFade 1s ease-in 0.3s forwards;
+            opacity: 0;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            padding: 1rem 2rem;
             background: transparent;
-            border: none;
-            outline: none;
-            color: orange;
-            font-size: 16px;
-            width: 50%;
-            text-align: left; /* Align input text to the left */
+            border: 2px solid #64ffda;
+            color: #64ffda;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            animation: ctaFade 1s ease-in 0.6s forwards;
+            opacity: 0;
         }
 
-        input:focus {
-            outline: none;
+        .hero-cta:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: translateY(-3px);
         }
 
-        footer {
-            color: #f7f7f7;
-            font-size: 14px;
-            text-align: center;
-            margin-top: 20px;
+        /* Right Section */
+        .hero-visual {
+            flex: 1;
+            position: relative;
+            animation: visualFade 1s ease-in 0.9s forwards;
+            opacity: 0;
+        }
+
+        .hero-sphere {
+            width: 500px;
+            height: 500px;
+            position: relative;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+
+        .sphere-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotateSphere 20s linear infinite;
+        }
+
+        .sphere-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(100, 255, 218, 0.1);
+            border-radius: 50%;
+            transform-style: preserve-3d;
+        }
+
+        /* Animations */
+        @keyframes patternMove {
+            from { background-position: 0 0; }
+            to { background-position: 100px 100px; }
+        }
+
+        @keyframes titleFade {
+            from { 
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes subtitleFade {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes ctaFade {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes visualFade {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes rotateSphere {
+            from {
+                transform: rotateY(0deg) rotateX(45deg);
+            }
+            to {
+                transform: rotateY(360deg) rotateX(45deg);
+            }
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 1200px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .hero-sphere {
+                width: 400px;
+                height: 400px;
+            }
+        }
+
+        @media screen and (max-width: 968px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 4rem;
+            }
+
+            .hero-text {
+                padding-right: 0;
+                margin-bottom: 3rem;
+            }
+
+            .hero-sphere {
+                width: 300px;
+                height: 300px;
+            }
+        }
+
+        @media screen and (max-width: 576px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .hero-sphere {
+                width: 250px;
+                height: 250px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Welcome message container -->
-    <div class="welcome-container">
-        <img src="src/imgs/logoapt.png" alt="Logo Antasari Programming Team">
-        <p>Welcome to</p>
-        <h1>Antasari Programming Team</h1>
-    </div>
-
-    <!-- Terminal simulation -->
-    <div class="terminal">
-        <div id="terminalOutput"></div>
-        <div class="input-line">
-            <span class="prompt">C:\Users\> </span><input type="text" id="terminalInput" autofocus />
+    <section class="hero-container">
+        <div class="hero-pattern"></div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">Antasari Programming Team</h1>
+                <p class="hero-subtitle">Membangun masa depan digital melalui inovasi kode dan kolaborasi. Bergabunglah dengan komunitas programmer terdepan di UIN Antasari untuk mengembangkan solusi teknologi yang berdampak.</p>
+                <a href="#join-us" class="hero-cta">Bergabung Bersama Kami</a>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-sphere">
+                    <div class="sphere-container">
+                        <!-- Generated rings for 3D sphere effect -->
+                        <div class="sphere-ring" style="transform: rotateY(0deg)"></div>
+                        <div class="sphere-ring" style="transform: rotateY(30deg)"></div>
+                        <div class="sphere-ring" style="transform: rotateY(60deg)"></div>
+                        <div class="sphere-ring" style="transform: rotateY(90deg)"></div>
+                        <div class="sphere-ring" style="transform: rotateY(120deg)"></div>
+                        <div class="sphere-ring" style="transform: rotateY(150deg)"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <footer>
-        Powered by GNU and Bitcoin
-    </footer>
+    </section>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const terminalOutput = document.getElementById('terminalOutput');
-            const terminalInput = document.getElementById('terminalInput');
-
-            const welcomeMessage = [
-                "Type a number to navigate:",
-                "1. About Us",
-                "2. Projects",
-                "3. Treasury",
-                "4. Blog"
-            ];
-
-            let currentLine = 0;
-
-            function typeMessage(message, callback) {
-                let i = 0;
-                const interval = setInterval(function () {
-                    terminalOutput.innerHTML += message.charAt(i);
-                    i++;
-                    if (i === message.length) {
-                        clearInterval(interval);
-                        callback();
-                    }
-                }, 50);
-            }
-
-            function displayWelcome() {
-                if (currentLine < welcomeMessage.length) {
-                    typeMessage(welcomeMessage[currentLine], function () {
-                        currentLine++;
-                        terminalOutput.innerHTML += '\n';
-                        displayWelcome();
-                    });
-                } else {
-                    terminalInput.focus();
-                }
-            }
-
-            terminalInput.addEventListener('keydown', function (event) {
-                if (event.key === 'Enter') {
-                    const inputValue = terminalInput.value.trim();
-                    terminalOutput.innerHTML += `\n> ${inputValue}\n`; // Display input in terminal
-
-                    if (inputValue === 'clear') {
-                        terminalOutput.innerHTML = '';
-                        displayWelcome();
-                    } else if (inputValue === '1') {
-                        window.location.href = 'maintanance.html'; // Replace with your actual URL
-                    } else if (inputValue === '2') {
-                        window.location.href = 'maintanance.html'; // Replace with your actual URL
-                    } else if (inputValue === '3') {
-                        window.location.href = 'treasury.html'; // Replace with your actual URL
-                    } else if (inputValue === '4') {
-                        window.location.href = 'maintanance.html'; // Replace with your actual URL
-                    } else {
-                        terminalOutput.innerHTML += "Invalid command. Please type 1, 2, 3, or 4.\n";
-                    }
-
-                    terminalInput.value = '';
-                }
-            });
-
-            displayWelcome();
+        // Add interactive parallax effect
+        document.addEventListener('mousemove', (e) => {
+            const sphere = document.querySelector('.hero-sphere');
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            
+            sphere.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
         });
+
+        // Add smooth scroll for CTA button
+        document.querySelector('.hero-cta').addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = document.querySelector(e.target.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+
+        // Dynamic sphere ring generation
+        const sphereContainer = document.querySelector('.sphere-container');
+        for (let i = 0; i < 10; i++) {
+            const ring = document.createElement('div');
+            ring.className = 'sphere-ring';
+            ring.style.transform = `rotateX(${i * 18}deg)`;
+            sphereContainer.appendChild(ring);
+        }
     </script>
 </body>
 </html>
